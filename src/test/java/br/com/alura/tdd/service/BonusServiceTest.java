@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BonusServiceTest {
 
+    BonusService service = new BonusService();
+
     @Test
     void funcionarioComSalarioMuitoAltoNaoPodeReceberBonus() {
-        BonusService service = new BonusService();
         assertThrows(IllegalArgumentException.class,() -> service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("12000"))));
     }
 
     @Test
     void bonusDeveriaSerDezPorCentoDoSalario() {
-        BonusService service = new BonusService();
         assertEquals(new BigDecimal("100.00"), service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("1000"))));
     }
 
