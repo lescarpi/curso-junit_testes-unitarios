@@ -11,14 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class BonusServiceTest {
 
     @Test
-    void bonusDeveriaSerZeroParaFuncionariosComSalarioMuitoAlto() {
-
+    void funcionarioComSalarioMuitoAltoNaoPodeReceberBonus() {
         BonusService service = new BonusService();
-        assertAll(
-                () -> assertEquals(new BigDecimal("0.00"), service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("12000")))),
-                () -> assertEquals(new BigDecimal("1000.00"), service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("10000")))),
-                () -> assertEquals(new BigDecimal("200.00"), service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("2000"))))
-        );
-
+        assertThrows(IllegalArgumentException.class,() -> service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("12000"))));
     }
+
+    @Test
+    void bonusDeveriaSerDezPorCentoDoSalario() {
+        BonusService service = new BonusService();
+        assertEquals(new BigDecimal("100.00"), service.calcularBonus(new Funcionario("Marlos", LocalDate.now(), new BigDecimal("1000"))));
+    }
+
 }
